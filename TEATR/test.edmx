@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="test.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="testTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="test" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="testContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Kassirs" EntityType="test.Kassir" />
+          <EntitySet Name="Bilets" EntityType="test.Bilet" />
+          <EntitySet Name="Spektaks" EntityType="test.Spektak" />
+          <EntitySet Name="Postanovs" EntityType="test.Postanov" />
+          <EntitySet Name="Clients" EntityType="test.Client" />
+          <AssociationSet Name="PostanovSpectak" Association="test.PostanovSpectak">
+            <End Role="Postanov" EntitySet="Postanovs" />
+            <End Role="Spektak" EntitySet="Spektaks" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Kassir">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" />
+          <Property Name="Mail" Type="String" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Number" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bilet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" />
+          <Property Name="Oplata" Type="String" Nullable="false" />
+          <Property Name="Buyer" Type="Int32" Nullable="false" />
+          <Property Name="id_Buyer" Type="String" Nullable="false" />
+          <Property Name="id_Spektak" Type="String" Nullable="false" />
+          <Property Name="Status" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Spektak">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" />
+          <Property Name="Actors" Type="String" Nullable="false" />
+          <Property Name="Photo" Type="String" Nullable="false" />
+          <Property Name="Actual" Type="String" Nullable="false" />
+          <Property Name="PostanovId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Postanov" Relationship="test.PostanovSpectak" FromRole="Spektak" ToRole="Postanov" />
+        </EntityType>
+        <EntityType Name="Postanov">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" />
+          <Property Name="Mail" Type="String" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Number" Type="String" Nullable="false" />
+          <NavigationProperty Name="Spectak" Relationship="test.PostanovSpectak" FromRole="Postanov" ToRole="Spektak" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" />
+          <Property Name="Mail" Type="String" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Number" Type="String" Nullable="false" />
+          <Property Name="Skidka" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="PostanovSpectak">
+          <End Type="test.Postanov" Role="Postanov" Multiplicity="1" />
+          <End Type="test.Spektak" Role="Spektak" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Postanov">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Spektak">
+              <PropertyRef Name="PostanovId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="test" />
+        <Alias Key="Target" Value="test.Store" />
+        <EntityContainerMapping CdmEntityContainer="testContainer" StorageEntityContainer="testTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
